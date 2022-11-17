@@ -1,0 +1,293 @@
+/*Linking Fonts*/
+@import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;1,100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Antic+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+
+body {
+    padding: 20px;
+    background-color: #393A3B;
+    color: white;
+    overflow-x: hidden;
+    font-family: 'Antic Slab', serif;
+}
+
+.navigation_bar{
+    margin: -20px -20px 0px -20px;
+}
+
+.top_navbar{
+    background-color: #FBEEC1;
+    color: black;
+}
+
+.a_non_link:link, .a_non_link:visited{
+    display: block;
+    text-decoration: none;
+}
+
+.nav_heading:link, .nav_heading:visited{
+    color: #E85A4F;
+    font-family: 'BioRhyme', sans-serif;
+    font-size: 30px;
+}
+
+.dropdown-divider{
+    background-color: #E85A4F;
+    height: 2px;
+}
+
+.navigation_bar_no_user_ul{
+    font-family: 'BioRhyme', sans-serif;
+    font-size: 20px;
+    color: #E85A4F;
+}
+
+.navigation_bar_no_user_a:link, .navigation_bar_no_user_a:visited{
+    color: #393A3B;
+}
+
+.below_navbar{
+    background-color: #EDF5E1;
+    font-family: 'IBM Plex Serif', serif;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.navigating_link:link, .navigating_link:visited{
+    color: black;
+    line-height: 1px;
+}
+
+h2{
+    font-family: 'Cinzel', serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: #E85A4F;
+}
+
+.center_message{
+    margin: auto;
+    width: 60%;
+    color: #8EE4AF;
+    text-align: center;
+}
+
+
+/*---------- FORMS ----------*/
+
+.form_box{
+    border: solid #FBEEC1;
+    border-radius: 20px;
+    padding: 15px 20px 15px 20px;
+    width: 60%;
+    margin: auto;
+    text-align: center;
+}
+
+.cream_line{
+    background-color: #FBEEC1;
+}
+
+
+/*---------- CREATE PAGE ----------*/
+
+.create_box{
+    border: solid #FBEEC1;
+    border-radius: 20px;
+    padding: 15px 20px 15px 20px;
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
+
+/*---------- INDEX PAGE ----------*/
+
+.active_listing_link_box:link, .active_listing_link_box:visited{
+    padding: 40px;
+}
+
+.active_listing_box{
+    background-color: #8EE4AF;  /*for red: ee4c7c  da7b93 for Title: EDf5E1*/
+    border: solid #116466;  /*FC4445*/
+    border-radius: 10px;
+    color: #E85A4F;
+    transition: transform .2s;
+    margin: 0 auto;
+    opacity: 0.8;
+}
+
+.active_listing_box:hover{
+    transform: scale(1.075);
+    opacity: 1;
+}
+
+.listing_img_box{
+    border-right: solid #116466;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.listing_img{
+    width: 100%;
+    height: 300px;
+}
+
+.listing_title{
+    font-family: 'BioRhyme', sans-serif;
+    font-size: 50px;
+    color: #E85A4F;
+    text-decoration: underline;
+}
+
+.less_info_div{
+    border-left: solid;
+    border-width: 0.5px;
+    height: 65px;
+    font-family: 'IBM Plex Serif', serif;
+    font-weight: bold;
+}
+
+.less_info_row{
+    height: 20px;
+}
+
+.listing_description{
+    font-family: 'Antic Slab', serif;
+    font-size: 20px;
+}
+
+.listing_price_row{
+    background-color: #E85A4F;
+    color: white;
+}
+
+.listing_price{
+    text-align: center;
+    line-height: 25px;
+    margin-top: 10px;
+    font-family: 'BioRhyme', sans-serif;
+    font-size: 20px;
+}
+
+
+/*---------- LISTING ----------*/
+
+.closed_overlay{
+    opacity: 0.8;
+    background: #000;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+.closed_sign{
+    margin-top: 150px;
+    margin-left: -40px;
+    height: 300px;
+    width: 650px;
+    position: relative;
+}
+
+.closed_message{
+    margin-top: 250px;
+    margin-left: -100px;
+    font-size: 40px;
+}
+
+.listing_box{
+    border: none;
+}
+
+.item_img_box {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.item_img {
+    width: 100%;
+    transition: 0.5s all ease-in-out;
+}
+
+.item_img:hover {
+    transform: scale(1.2);
+}
+
+.watchlist_star{
+    width: 50px;
+    height: 50px;
+    float: right;
+    margin: 20px 20px 0px 0px;
+}
+
+.listing_sub_info{
+    font-family: 'IBM Plex Serif', serif;
+    font-weight: bold;
+    margin-top: -25px;
+}
+
+.listing_price_label{
+    font-family: 'BioRhyme', sans-serif;
+    font-size: 18px;
+    color: #E85A4F;
+}
+
+.listing_price{
+    font-size: 18px;
+    color: white;
+}
+
+.interact_button{
+    background-color: #E85A4F;
+    color: white;
+    font-family: 'Antic Slab', serif;
+    border: none;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+.bid_amount_input{
+    width: 200px;
+    border-radius: 10px;
+}
+
+.bid_button{
+    background-color: #E85A4F;
+    color: white;
+    font-family: 'Antic Slab', serif;
+    border: none;
+    border-radius: 10px;
+    margin-top: 5px;
+    width: 200px;
+}
+
+.white_line{
+    background-color: #ccc;
+    height: 1px;
+    border: none;
+}
+
+
+/*--------------------ABOUT PAGE----------------------*/
+
+@media (min-width: 577px) {
+    img#contactimg {
+        width: 100%;
+        padding-top: 0.8em;
+        float: right;
+    }
+}
+
+@media (max-width: 576px) {
+    #contactimg{
+        display: none;
+    }
+}
+
+.fa:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}

@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% load static %}
+
+{% block title %}: About{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>About Us</h2>
+        <div class="row">
+            <div class="col-sm-8 col-12">
+                <p class="ContactInfo">
+                    This site has been developed and is being maintained by Chaitanya Malani.<br>
+                    <br>
+                    <br>
+                    I am an aspiring software engineer who is currently studying Computer Science in Mumbai, India. I love to code and explore various fields within computers. Also I am a very big football enthusiast and I love supporting Manchester United F.C.
+                    <br><br>
+                    This website represents a online auction bidding site, wherein users can publish listings of the items they want to sell. For more information, demonstartion and usage of this website, kindly watch <a href="https://youtu.be/FUzSQ6Zw2vo" target="_blank">this video</a>.
+                    <br><br>
+                    <i class="fa fa-instagram" onclick="window.open('http://www.instagram.com/itsme.cmn22','_blank')" style="font-size:1.4em"> itsme.cmn22</i>
+                    <br><br>
+                    <i class="fa fa-facebook" onclick="window.open('https://www.facebook.com/itsme.cmn22','_blank')" style="font-size:1.4em"> Chaitanya Malani</i>
+                </p>
+            </div>
+            <div class="col-sm-4 col-0">
+                <img id="contactimg" src="{% static 'auctions/images/contactimg.jpg' %}">
+            </div>
+        </div>
+    </div>
+{% endblock %}

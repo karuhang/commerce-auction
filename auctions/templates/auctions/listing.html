@@ -1,0 +1,189 @@
+{% extends "auctions/layout.html" %}
+
+{% load static %}
+
+{% block title %}: {{ listing.title }}{% endblock %}
+
+{% block body %}
+
+    <!--Overlay for Closed Listings-->
+    {% if listing.active == False %}
+    <div class="closed_overlay">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <img class="closed_sign" src="{% static 'auctions/images/closed_sign.png' %}">
+                </div>
+                <div class="col-6">
+                    {% if listing.owner.username == user.username %}
+                        <!--Logged in user is the Owner of the closed listing-->
+                        <p class="closed_message">Your {{ listing.title }} was SOLD!<br>(to {{ highest_bid.bidder.username }} for Rs. {{ listing.current_price }})</p>
+
+                    {% elif highest_bid.bidder.username == user.username %}
+                        <!--Logged in user is the Winner of the closed listing-->
+                        <p class="closed_message">Congratulations!!!<br>You won this auction for Rs. {{ highest_bid.bid }}</p>
+
+                    {% else %}
+                        <!--Logged in user is a Observer of the closed listing-->
+                        <p class="closed_message">Sorry, {{ listing.title }} was SOLD!<br>(to {{ highest_bid.bidder.username }} for Rs. {{ listing.current_price }})</p>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!--Listing Information-->
+    <div class="container-fluid listing_box">
+        <div class="row">
+            <div class="col-4 item_img_box">
+                <img class="item_img" src="{{ listing.image }}" width="100%">
+            </div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-9">
+                        <p class="listing_title">{{ listing.title }}</p>
+                    </div>
+                    <div class="col-3">
+                        {% if user.is_authenticated %}
+                            {% if watchlist == False %}
+                                <!--Listing NOT present in user's Watchlist-->
+                                <form action="{% url 'watchlist' %}" method="post">
+                                    {% csrf_token %}
+                                    <input class="form-control" type="hidden" name="user" placeholder="User" value="{{ user.username }}">
+                                    <input class="form-control" type="hidden" name="watch_item" placeholder="Watch Item" value="{{ listing.title }}">
+                                    <input class="form-control" type="hidden" name="watchlist_exe" placeholder="Add Item" value="add">
+                                    <!--Black Star-->
+                                    <input class="watchlist_star" type="image" title="Add to Watchlist" alt="Not in Wishlist" src="{% static 'auctions/images/star_black.png' %}">
+                                </form>
+                            {% else %}
+                                <!--Listing IS present in user's Watchlist-->
+                                <form action="{% url 'watchlist' %}" method="post">
+                                    {% csrf_token %}
+                                    <input class="form-control" type="hidden" name="user" placeholder="User" value="{{ user.username }}">
+                                    <input class="form-control" type="hidden" name="watch_item" placeholder="Watch Item" value="{{ listing.title }}">
+                                    <input class="form-control" type="hidden" name="watchlist_exe" placeholder="Remove Item" value="remove">
+                                    <!--Yellow Star-->
+                                    <input class="watchlist_star" type="image" title="Remove from Watchlist" alt="In Wishlist" src="{% static 'auctions/images/star_yellow.png' %}">
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="listing_sub_info">{{ listing.category }} | Published by {{ listing.owner.username }} at {{ listing.date.date }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="listing_description">{{ listing.description }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>
+                                    <span class="listing_price_label">CURRENT PRICE: </span>
+                                    <span class="listing_price">Rs. {{ listing.current_price }} </span>
+                                    {% if highest_bid != None %}
+                                        <span class="listing_price_by">(by {{ highest_bid.bidder }})</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p><span class="listing_price_label">BASE PRICE: </span><span class="listing_price">Rs. {{ listing.base_price }}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="row">
+                            {% if user.is_authenticated == False %}
+                                <!--NOT LOGGED IN-->
+                                <a href="{% url 'login' %}"><button class="interact_button"><span class="listing_price">LOGIN NOW</span> <br> (to interact with this item)</button></a>
+                            {% elif user.username == listing.owner.username %}
+                                <!--OWNER ITSELF-->
+                                <form action="{% url 'close' %}" method="post">
+                                    {% csrf_token %}
+                                    <input class="form-control" type="hidden" name="item" placeholder="Item" value="{{ listing.title }}">
+                                    <button type="submit" class="interact_button">
+                                        <span class="listing_price">CLOSE AUCTION</span>
+                                        {% if highest_bid != None %}
+                                            <br> [sell @ Rs. {{ listing.current_price }} to {{ highest_bid.bidder }}]
+                                        {% endif %}
+                                    </button>
+                                </form>
+                            {% else %}
+                                <!--CAN BID-->
+                                <form action="{% url 'bid' %}" method="post">
+                                    {% csrf_token %}
+                                    {% if highest_bid != None %}
+                                        <input class="form-control bid_amount_input" type="number" name="bid" placeholder="Bid(min: Rs. {{min_bid}})" value="{{min_bid}}" min="{{ min_bid }}" required>
+                                    {% else %}
+                                        <input class="form-control bid_amount_input" type="number" name="bid" placeholder="Bid(min: Rs. {{listing.current_price}})" value="{{listing.current_price}}" min="{{ listing.current_price }}" required>
+                                    {% endif %}
+                                    <input class="form-control" type="hidden" name="item" placeholder="Item" value="{{ listing.title }}">
+                                    <input class="form-control" type="hidden" name="bidder" placeholder="Bidder" value="{{ user.username }}">
+                                    <input class="btn bid_button listing_price" type="submit" value="BID">
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1>Comments</h1>
+                <hr class="white_line">
+            </div>
+        </div>
+        {% if user.is_authenticated == True %}
+        <!--User is logged in, so can comment-->
+        <div class="row">
+            <div class="col-12">
+                <form action="{% url 'comment' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="comment">Write a comment</label>
+                        <textarea class="form-control" name="comment" placeholder="Share your thoughts..." maxlength="1000" rows="2"></textarea>
+                    </div>
+                    <input class="form-control" type="hidden" name="item" placeholder="Item" value="{{ listing.title }}">
+                    <input class="form-control" type="hidden" name="commentor" placeholder="Commentor" value="{{ user.username }}">
+                    <button type="submit" class="btn btn-primary bid_button">Comment</button>
+                </form>
+                <hr class="white_line">
+            </div>
+        </div>
+        {% endif %}
+
+        {% for comment in comments %}
+        <!--To display comments on the listing-->
+        <div class="row">
+            <div class="col-12">
+                <span class="listing_price_label">{{ comment.commentor }} said... </span><br>
+                <span class="listing_price_by">{{ comment.comment }} </span>
+            </div>
+        </div>
+        <hr class="white_line">
+
+        {% empty %}
+        <!--If no comments on the listing-->
+        <div class="row">
+            <div class="col-12">
+                <p>No Comments</p>
+            </div>
+        </div>
+        
+        {% endfor %}
+    </div>
+{% endblock %}
